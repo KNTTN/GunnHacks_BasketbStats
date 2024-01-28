@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>BasketStats</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <input type="file" id="videoFile" accept="video/*">
+  <br>
+  <video id="myVideo" controls>
+      Your browser does not support the video tag.
+  </video>
+  
+  <div id="team-buttons">
+    <button onclick="Team1_click()" id="team1" type="button">Team 1</button>
+    <br>
+    <button onclick="Team2_click()" id="team2" type="button">Team 2</button>
+    <br>
+    <button id="Highlight" type="button">Highlight</button>
+  </div>
+  
+  <div id="main-buttons">
+    <button onclick="Shot_click()" id="shot_attempt" type="button">Shot Attempt</button>
+    <br>
+    <button onclick="Foul_click()" id="Foul" type="button">Foul</button>
+    <br>
+    <button onclick="Turnover_click()" id="Turnover" type="button">Turnover</button>
+  </div>
+
+  <div id="point-buttons">
+    <button onclick="onept_click()" id="1pt" type="button">Free Throw</button>
+    <br>
+    <button onclick="twopt_click()" id="2pt" type="button">2 Point</button>
+    <br>
+    <button onclick="threept_click()" id="3pt" type="button">3 Point</button>
+  </div>
+
+  <div id="result-buttons">
+    <button onclick="made_click()" id="made" type="button">Made</button>
+    <br>
+    <button onclick="missed_click()" id="missed" type="button">Missed </button>
+  </div>
+  <script src="script.js"></script>
+  
+</body>
+
+
+</html>
