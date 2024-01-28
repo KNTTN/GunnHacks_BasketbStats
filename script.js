@@ -1,3 +1,9 @@
+class team {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
 class Player {
     constructor(name) {
         this.name = name;
@@ -16,7 +22,7 @@ document.getElementById('videoFile').addEventListener('change', function(event) 
     }
   });
 
-const team1 = ["Gunn",
+const team1 = [new team("Gunn"),
     new Player('KA'),
     new Player('IR'),
     new Player('IF'),
@@ -24,7 +30,7 @@ const team1 = ["Gunn",
     new Player('AM')
 ];
 
-const team2 = ["Paly",
+const team2 = [new team("Paly"),
     new Player('Kane Do'),
     new Player('Tanmay Adya'),
     new Player('Ben Larris'),
@@ -58,9 +64,9 @@ function PlayerSelect() {
     const playerNames = [teams[currentTeam][1].name, teams[currentTeam][2].name, teams[currentTeam][3].name, teams[currentTeam][4].name, teams[currentTeam][5].name];
     const playerButtons = ['p1', 'p2', 'p3', 'p4', 'p5'];
 
-    document.getElementById("Team 1").textContent = String(teams[0][0] + " team")
-    document.getElementById("Team 2").textContent = String(teams[1][0] + " team")
-    document.getElementById("Other team").textContent = String(teams[(currentTeam + 1) % 2][0] + "'s Players")
+    document.getElementById("Team 1").textContent = String(teams[0][0].name + " team")
+    document.getElementById("Team 2").textContent = String(teams[1][0].name + " team")
+    document.getElementById("Other team").textContent = String(teams[(currentTeam + 1) % 2][0].name + "'s Players")
     for (let i = 0; i < 5; i++) {
         const button = document.getElementById(playerButtons[i]);
         button.textContent = playerNames[i];
