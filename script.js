@@ -86,6 +86,7 @@ showElements("ParentAction");
 // All event listeners
 
 document.getElementById('FG Attempt').addEventListener('click', function() {
+    videoElement.pause();
     showElements("ShotType");
     currentPage = "ShotType"
     ActionStorage = [];
@@ -150,6 +151,7 @@ document.getElementById("MissedShootingFoul").addEventListener('click', function
 });
 
 document.getElementById("Turnover").addEventListener('click', function() {
+    videoElement.pause();
     showElements("PlayerSelect");
     currentPage = "Turnover"
     ActionStorage.push("Turnover");
@@ -164,6 +166,7 @@ document.getElementById("Steal").addEventListener('click', function() {
 });
 
 document.getElementById("Highlight").addEventListener('click', function() {
+    videoElement.pause();
     showElements("PlayerSelect");
     currentPage = "Highlight";
     ActionStorage.push("Highlight");
@@ -177,6 +180,7 @@ document.getElementById("AddComment").addEventListener('click', function() {
 });
 
 document.getElementById("Foul").addEventListener('click', function() {
+    videoElement.pause();
     showElements("PlayerSelect");
     currentPage = "FoulPlayer";
     ActionStorage.push("Foul");
@@ -198,6 +202,7 @@ for (var i = 0; i < continueButtons.length; i++) {
         currentPage = "ParentAction";
         console.log(ActionStorage);
         GameStorage.push(ActionStorage);
+        ActionStorage = [];
     });
 }
 
@@ -233,14 +238,17 @@ document.getElementById("FTMissed").addEventListener('click', function() {
     }
 });
 
+var names = "";
+
 let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2", "Other"]
     for (let i = 0; i < 8; i++) {
-        if (i < 5) {
-var names = teams[currentTeam][i + 1].name
-        } else {
-            var names = [team1[0].name, team2[0].name, String(team2[0].name + "'s Players")][i-5]
-        }
         document.getElementById(players[i]).addEventListener('click', function() {
+            if (i < 5) {
+                names = teams[currentTeam][i + 1].name
+           } else {
+                names = [team1[0].name, team2[0].name, String(team2[0].name + "'s Players")][i-5]
+           }
+           
             if (currentPage == "WhoShot") {
                 showElements("MakePage");
                 currentPage = "MakePage";
@@ -254,6 +262,7 @@ var names = teams[currentTeam][i + 1].name
                 ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
+                ActionStorage = []
             }
             if (currentPage == "ShootingFoul") {
                 showElements("FreeThrow");
@@ -269,6 +278,7 @@ var names = teams[currentTeam][i + 1].name
                 ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
+                ActionStorage = []
             }
             if (currentPage == "Block") {
                 showElements("ParentAction");
@@ -277,13 +287,14 @@ var names = teams[currentTeam][i + 1].name
                 ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
+                ActionStorage = []
             }
 
             if (currentPage == "Turnover") {
                 showElements("StealCheck");
                 currentPage = "StealCheck";
                 ActionStorage.push(videoElement.currentTime)
-                ActionStorage.push(teams[currentTeam][i + 1].name);
+                ActionStorage.push(names);
             }
             if (currentPage == "Steal") {
                 showElements("ParentAction");
@@ -292,6 +303,7 @@ var names = teams[currentTeam][i + 1].name
                 ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
+                ActionStorage = []
             }
             if (currentPage == "Highlight") {
                 showElements("AddComment");
@@ -300,6 +312,7 @@ var names = teams[currentTeam][i + 1].name
                 ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
+                ActionStorage = []
             }
             if (currentPage == "FoulPlayer") {
                 showElements("ParentAction");
@@ -316,6 +329,14 @@ var names = teams[currentTeam][i + 1].name
                 ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
+                ActionStorage = []
             }
         });
     }
+
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'b') {
+        console.log(GameStorage)
+    }
+});
