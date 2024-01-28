@@ -1,308 +1,79 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>BasketStats</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>BasketStats</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
-</head>
+    <body>
+        <div class="video-container">
+            <input type="file" id="videoFile" accept="video/*">
+            <video id="myVideo" controls>
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="menu">
+            <div class="ParentAction">
+                <button id="FG Attempt">Shot Attempt</button>
+                <button id="Foul">Foul</button>
+                <button id="Turnover">Turnover</button>
+                <button id="Highlight">Highlight</button>
+            </div>
 
-<body id="body">
-  <input type="file" id="videoFile" accept="video/*">
-  <br>
-  <video id="myVideo" controls>
-      Your browser does not support the video tag.
-  </video>
-  
-  <div id="team-buttons">
-    <button onclick="Team1_click()" id="team1" type="button">Team 1</button>
-    <br>
-    <button onclick="Team2_click()" id="team2" type="button">Team 2</button>
-    <br>
-    <button onclick="Highlight_click()" id="Highlight" type="button">Highlight</button>
-    <br>
-    <button onclick="Table_update()" id="Table" type="button">Update Table</button>
-  </div>
-  
-  <div id="main-buttons">
-    <button onclick="Shot_click()" id="shot_attempt" type="button">Shot Attempt</button>
-    <br>
-    <button onclick="Foul_click()" id="Foul" type="button">Foul</button>
-    <br>
-    <button onclick="Turnover_click()" id="Turnover" type="button">Turnover</button>
-  </div>
+            <div class="ShotType">
+                <button id="2pts">2 pointer</button>
+                <button id="3pts">3 pointer</button>
+            </div>
 
-  <div id="point-buttons">
-    <button onclick="onept_click()" id="1pt" type="button">Free Throw</button>
-    <br>
-    <button onclick="twopt_click()" id="2pt" type="button">2 Point</button>
-    <br>
-    <button onclick="threept_click()" id="3pt" type="button">3 Point</button>
-  </div>
+            <div class="PlayerSelect">
+                <button id="p1">Player 1</button>
+                <button id="p2">Player 2</button>
+                <button id="p3">Player 3</button>
+                <button id="p4">Player 4</button>
+                <button id="p5">Player 5</button>
+                <button id="Team 1">Team 1</button>
+                <button id="Team 2">Team 2</button>
+                <button id="Other team">Other Team's players</button>
+            </div>
 
-  <div id="result-buttons">
-    <button onclick="made_click()" id="made" type="button">Made</button>
-    <br>
-    <button onclick="missed_click()" id="missed" type="button">Missed </button>
-  </div>
+            <div class="MakePage">
+                <button id="Made">Make</button>
+                <button id="Missed">Miss</button>
+            </div>
 
-  <table id="game-table">
-    <tr id="labels">
-      <td>Team</td>
-      <td>Fouls</td>
-      <td>Turnovers</td>
-      <td>Free Throws Made</td>
-      <td>Free Throws Missed</td>
-      <td>2 Point Shots Made</td>
-      <td>2 Point Shots Missed</td>
-      <td>3 Point Shots Made</td>
-      <td>3 Point Shots Missed</td>
-    </tr>
-    <tr id="team1table">
-      <td>Team 1:</td>
-      <td id="team1fouls">0</td>
-      <td id="team1turnovers">0</td>
-      <td id="team1freethrowmakes">0</td>
-      <td id="team1freethrowmisses">0</td>
-      <td id="team12pointmakes">0</td>
-      <td id="team12pointmisses">0</td>
-      <td id="team13pointmakes">0</td>
-      <td id="team13pointmisses">0</td>
-    </tr>
-    <tr id="team2table">
-      <td>Team 2:</td>
-      <td id="team2fouls">0</td>
-      <td id="team2turnovers">0</td>
-      <td id="team2freethrowmakes">0</td>
-      <td id="team2freethrowmisses">0</td>
-      <td id="team22pointmakes">0</td>
-      <td id="team22pointmisses">0</td>
-      <td id="team23pointmakes">0</td>
-      <td id="team23pointmisses">0</td>
-    </tr>
-  </table>
-  <br>
-  <div>
-  <h1>Highlight Timestamps:</h1>
-  <br>
-  <ul id="list">
-    
-  </ul>
-  </div>
-  <script>
-    let game = {
-      team1: {
-        shots: {
-          one: {
-            made: 0, 
-            missed: 0
-          },
-          two: {
-            made: 0, 
-            missed: 0
-          },
-          three: {
-            made: 0, 
-            missed: 0
-          }
-        }, 
-        fouls: 0,
-        turnovers: 0
-      }, 
-      team2: {
-        shots: {
-          one: {
-            made: 0, 
-            missed: 0
-          },
-          two: {
-            made: 0, 
-            missed: 0
-          },
-          three: {
-            made: 0, 
-            missed: 0
-          }
-        }, 
-        fouls: 0,
-        turnovers: 0
-      }
-    };
-    var team = 0;
-    var point = 0;
-    document.getElementById('videoFile').addEventListener('change', function(event) {
-      var videoElement = document.getElementById('myVideo');
-      var file = event.target.files[0];
-      if (file && file.type.startsWith('video/')) {
-        var videoURL = URL.createObjectURL(file);
-        videoElement.src = videoURL;
-      } else {
-        alert('Please choose a valid video file.');
-      }
-    });
+            <div class="MadeShot">
+                <button id="Assist">Assist</button>
+                <button id="MadeShootingFoul">Foul</button>
+                <button class="Continue">Continue</button>
+            </div>
+            
+            <div class="MissedShot">
+                <button id="Rebound">Rebound</button>
+                <button id="Block">Block</button>
+                <button id="MissedShootingFoul">Foul</button>
+                <button class="Continue">Continue</button>
+            </div>
 
+            <div class="FreeThrow">
+                <button id="FTMade">Make</button>
+                <button id="FTMissed">Miss</button>
+            </div>
 
-    function Team1_click() {
-      document.getElementById("team-buttons").style.display = "none";
-      document.getElementById("main-buttons").style.display = "block";
-      document.getElementById('myVideo').pause();
-      team = 1;
-    }
+            <div class="StealCheck">
+                <button id="Steal">Steal</button>
+                <button class="Continue">Continue</button>
+            </div>
 
-    function Team2_click() {
-      document.getElementById("team-buttons").style.display = "none";
-      document.getElementById("main-buttons").style.display = "block";
-      document.getElementById('myVideo').pause();
-      team = 2;
-    }
+            <div class="Substitute">
+                <button id="Substitute">Substitute</button>
+            </div>
+            <div class="AddComment">
+                <input type="text" id="comment" placeholder="Add comment">
+                <button id="AddComment">Add comment</button>
+            </div>
 
-
-    function Shot_click() {
-      document.getElementById("main-buttons").style.display = "none";
-      document.getElementById("point-buttons").style.display = "block";
-    }
-
-    function Foul_click() {
-      document.getElementById("main-buttons").style.display = "none";
-      document.getElementById("team-buttons").style.display = "block";
-      if (team == 1) {
-        game.team1.fouls += 1;
-      }
-      else if (team == 2) {
-        game.team2.fouls += 1;
-      };
-      console.log(game);
-      //Table_update();
-    }
-
-    function Turnover_click() {
-      document.getElementById("main-buttons").style.display = "none";
-      document.getElementById("team-buttons").style.display = "block";
-      if (team == 1) {
-        game.team1.turnovers += 1;
-      }
-      else if (team == 2) {
-        game.team2.turnovers += 1;
-      };
-      console.log(game);
-      //Table_update();
-    }
-
-
-    function onept_click() {
-      document.getElementById("point-buttons").style.display = "none";
-      document.getElementById("result-buttons").style.display = "block";
-      point = 1;
-    }
-
-    function twopt_click() {
-      document.getElementById("point-buttons").style.display = "none";
-      document.getElementById("result-buttons").style.display = "block";
-      point = 2;
-    }
-
-    function threept_click() {
-      document.getElementById("point-buttons").style.display = "none";
-      document.getElementById("result-buttons").style.display = "block";
-      point = 3;
-    }
-
-    function made_click() {
-      document.getElementById("result-buttons").style.display = "none";
-      document.getElementById("team-buttons").style.display = "block";
-      if (team == 1) {
-        if (point == 1) {
-          game.team1.shots.one.made += 1;
-        }
-        if (point == 2) {
-          game.team1.shots.two.made += 1;
-        }
-        if (point == 3) {
-          game.team1.shots.three.made += 1;
-        }
-        console.log(game);
-        //Table_update();
-      }
-      else if (team == 2) {
-        if (point == 1) {
-          game.team2.shots.one.made += 1;
-        }
-        if (point == 2) {
-          game.team2.shots.two.made += 1;
-        }
-        if (point == 3) {
-          game.team2.shots.three.made += 1;
-        }
-      };
-      console.log(game);
-      //Table_update();
-    }
-
-    function missed_click() {
-      document.getElementById("result-buttons").style.display = "none";
-      document.getElementById("team-buttons").style.display = "block";
-      if (team == 1) {
-        if (point == 1) {
-          game.team1.shots.one.missed += 1;
-        }
-        if (point == 2) {
-          game.team1.shots.two.missed += 1;
-        }
-        if (point == 3) {
-          game.team1.shots.three.missed += 1;
-        }
-        console.log(game);
-        //Table_update();
-      }
-      else if (team == 2) {
-        if (point == 1) {
-          game.team2.shots.one.missed += 1;
-        }
-        if (point == 2) {
-          game.team2.shots.two.missed += 1;
-        }
-        if (point == 3) {
-          game.team2.shots.three.missed += 1;
-        }
-      };
-      console.log(game);
-      //Table_update();
-    }
-
-    function Highlight_click() {
-      const para = document.createElement("li");
-      const node = document.createTextNode(document.getElementById('myVideo').currentTime);
-      para.appendChild(node);
-      const body = document.getElementById("list");
-      linebreak = document.createElement("br");
-      //body.appendChild(linebreak);
-      //body.appendChild(linebreak);
-      body.appendChild(para)
-      //alert(document.getElementById('myVideo').currentTime);
-    }
-
-    function Table_update() {
-      document.getElementById("game-table").style.display = "block";
-      document.getElementById("team1fouls").innerHTML = game.team1.fouls;
-      document.getElementById("team2fouls").innerHTML = game.team2.fouls;
-      document.getElementById("team1turnovers").innerHTML = game.team1.turnovers;
-      document.getElementById("team2turnovers").innerHTML = game.team2.turnovers;
-      document.getElementById("team1freethrowmakes").innerHTML = game.team1.shots.one.made;
-      document.getElementById("team2freethrowmakes").innerHTML = game.team2.shots.one.made;
-      document.getElementById("team1freethrowmisses").innerHTML = game.team1.shots.one.missed;
-      document.getElementById("team2freethrowmisses").innerHTML = game.team2.shots.one.missed;
-      document.getElementById("team12pointmakes").innerHTML = game.team1.shots.two.made;
-      document.getElementById("team22pointmakes").innerHTML = game.team2.shots.two.made;
-      document.getElementById("team12pointmisses").innerHTML = game.team1.shots.two.missed;
-      document.getElementById("team22pointmisses").innerHTML = game.team2.shots.two.missed;
-      document.getElementById("team13pointmakes").innerHTML = game.team1.shots.three.made;
-      document.getElementById("team23pointmakes").innerHTML = game.team2.shots.three.made;
-      document.getElementById("team13pointmisses").innerHTML = game.team1.shots.three.missed;
-      document.getElementById("team23pointmisses").innerHTML = game.team2.shots.three.missed;
-    }
-  </script>
-</body>
-
-
+        <script src="script.js"></script>
+    </body>
 </html>

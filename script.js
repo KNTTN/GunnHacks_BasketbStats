@@ -1,210 +1,278 @@
-let game = {
-  team1: {
-    shots: {
-      one: {
-        made: 0, 
-        missed: 0
-      },
-      two: {
-        made: 0, 
-        missed: 0
-      },
-      three: {
-        made: 0, 
-        missed: 0
-      }
-    }, 
-    fouls: 0,
-    turnovers: 0
-  }, 
-  team2: {
-    shots: {
-      one: {
-        made: 0, 
-        missed: 0
-      },
-      two: {
-        made: 0, 
-        missed: 0
-      },
-      three: {
-        made: 0, 
-        missed: 0
-      }
-    }, 
-    fouls: 0,
-    turnovers: 0
-  }
-};
-var team = 0;
-var point = 0;
+class Player {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+
 document.getElementById('videoFile').addEventListener('change', function(event) {
-  var videoElement = document.getElementById('myVideo');
-  var file = event.target.files[0];
-  if (file && file.type.startsWith('video/')) {
-    var videoURL = URL.createObjectURL(file);
-    videoElement.src = videoURL;
-  } else {
-    alert('Please choose a valid video file.');
-  }
+    var videoElement = document.getElementById('myVideo');
+    var file = event.target.files[0];
+    if (file && file.type.startsWith('video/')) {
+      var videoURL = URL.createObjectURL(file);
+      videoElement.src = videoURL;
+    } else {
+      alert('Please choose a valid video file.');
+    }
+  });
+
+const team1 = ["Gunn",
+    new Player('KA'),
+    new Player('IR'),
+    new Player('IF'),
+    new Player('LW'),
+    new Player('AM')
+];
+
+const team2 = ["Paly",
+    new Player('Kane Do'),
+    new Player('Tanmay Adya'),
+    new Player('Ben Larris'),
+    new Player('Jake Wang'),
+    new Player('Someone else')
+];
+
+const teams = [team1, team2]
+
+function HideAll() {
+    const classes = ["ParentAction", "ShotType", "PlayerSelect", "MakePage", "MadeShot", "MissedShot", "FreeThrow", "StealCheck",
+        "AddComment"];
+
+    for (let i = 0; i < classes.length; i++) {
+        const elements = document.getElementsByClassName(classes[i]);
+        for (let j = 0; j < elements.length; j++) {
+            elements[j].style.display = 'none';
+        }
+    }
+}
+
+function showElements(className) {
+    HideAll();
+    const elements = document.getElementsByClassName(className);
+    for (let j = 0; j < elements.length; j++) {
+        elements[j].style.display = 'flex';
+    }
+}
+
+function PlayerSelect() {
+    const playerNames = [teams[currentTeam][1].name, teams[currentTeam][2].name, teams[currentTeam][3].name, teams[currentTeam][4].name, teams[currentTeam][5].name];
+    const playerButtons = ['p1', 'p2', 'p3', 'p4', 'p5'];
+
+    document.getElementById("Team 1").textContent = String(teams[0][0] + " team")
+    document.getElementById("Team 2").textContent = String(teams[1][0] + " team")
+    document.getElementById("Other team").textContent = String(teams[(currentTeam + 1) % 2][0] + "'s Players")
+    for (let i = 0; i < 5; i++) {
+        const button = document.getElementById(playerButtons[i]);
+        button.textContent = playerNames[i];
+    }
+}
+
+
+var videoElement = document.getElementById('myVideo');
+
+var currentTeam = 0;
+var currentPage = "ParentAction"
+var ActionStorage = [];
+var GameStorage = [];
+
+showElements("ParentAction");
+
+// All event listeners
+
+document.getElementById('FG Attempt').addEventListener('click', function() {
+    showElements("ShotType");
+    currentPage = "ShotType"
+    ActionStorage = [];
+    ActionStorage.push("FG Attempt");
 });
 
+document.getElementById('2pts').addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "WhoShot"
+    ActionStorage.push("2pts");
+    PlayerSelect();
+});
 
-function Team1_click() {
-  document.getElementById("team-buttons").style.display = "none";
-  document.getElementById("main-buttons").style.display = "block";
-  document.getElementById('myVideo').pause();
-  team = 1;
+document.getElementById('3pts').addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "WhoShot"
+    ActionStorage.push("3pts");
+    PlayerSelect();
+});
+
+document.getElementById('Other team').addEventListener('click', function() {
+    currentTeam = (currentTeam + 1) % 2;
+    showElements("PlayerSelect");
+    PlayerSelect();
+});
+
+document.getElementById('Made').addEventListener('click', function() {
+    showElements("MadeShot");
+    currentPage = "Made"
+    ActionStorage.push("Made");
+});
+
+document.getElementById("Assist").addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "Assist"
+    ActionStorage.push("Assist");
+});
+
+document.getElementById("Rebound").addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "Rebound"
+    ActionStorage.push("Rebound");
+});
+
+document.getElementById("Block").addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "Block"
+    ActionStorage.push("Block");
+});
+
+document.getElementById("MadeShootingFoul").addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "ShootingFoul"
+    ActionStorage.push("ShootingFoul");
+});
+
+document.getElementById("MissedShootingFoul").addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "ShootingFoul"
+    ActionStorage.push("ShootingFoul");
+});
+
+document.getElementById("Turnover").addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "Turnover"
+    ActionStorage.push("Turnover");
+    PlayerSelect();
+});
+
+document.getElementById("Steal").addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "Steal"
+    ActionStorage.push("Steal");
+    PlayerSelect();
+});
+
+document.getElementById("Highlight").addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "Highlight";
+    ActionStorage.push("Highlight");
+    PlayerSelect();
+});
+
+document.getElementById("AddComment").addEventListener('click', function() {
+    showElements("ParentAction");
+    currentPage = "ParentAction";
+    ActionStorage.push("Comment: " + document.getElementById("Comment").value);
+});
+
+var continueButtons = document.getElementsByClassName("Continue");
+for (var i = 0; i < continueButtons.length; i++) {
+    continueButtons[i].addEventListener('click', function() {
+        showElements("ParentAction");
+        currentPage = "ParentAction";
+        console.log(ActionStorage);
+        GameStorage.push(ActionStorage);
+    });
 }
 
-function Team2_click() {
-  document.getElementById("team-buttons").style.display = "none";
-  document.getElementById("main-buttons").style.display = "block";
-  document.getElementById('myVideo').pause();
-  team = 2;
-}
+document.getElementById("Missed").addEventListener('click', function() {
+    showElements("MissedShot");
+    currentPage = "MissedShot"
+    ActionStorage.push("Missed");
+});
 
+document.getElementById("FTMade").addEventListener('click', function() {
+    ActionStorage.push("FTMade");
+    let ShotType = parseInt(ActionStorage[1][0]);
+    let ShotMade = ActionStorage[4] === "Made";
+    var count = 0;
+    ActionStorage.forEach((v) => ((v === "FTMade" || v === "FTMissed") && count++));
+        if (ShotMade || count == ShotType) {
+            showElements("ParentAction");
+            currentPage = "ParentAction";
+            console.log(ActionStorage);
+            GameStorage.push(ActionStorage);
+        }
+    });
 
-function Shot_click() {
-  document.getElementById("main-buttons").style.display = "none";
-  document.getElementById("point-buttons").style.display = "block";
-}
+document.getElementById("FTMissed").addEventListener('click', function() {
+    ActionStorage.push("FTMissed");
+    let ShotType = parseInt(ActionStorage[1][0]);
+    let ShotMade = ActionStorage[4] === "Made";
+    var count = 0;
+    ActionStorage.forEach((v) => ((v === "FTMade" || v === "FTMissed") && count++));
+    if (ShotMade || count === ShotType) {
+        showElements("PlayerSelect");
+        currentPage = "Rebound";
+    }
+});
 
-function Foul_click() {
-  document.getElementById("main-buttons").style.display = "none";
-  document.getElementById("team-buttons").style.display = "block";
-  if (team == 1) {
-    game.team1.fouls += 1;
-  }
-  else if (team == 2) {
-    game.team2.fouls += 1;
-  };
-  console.log(game);
-  //Table_update();
-}
+let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2"]
+    for (let i = 0; i < 7; i++) {
+        document.getElementById(players[i]).addEventListener('click', function() {
+            if (currentPage == "WhoShot") {
+                showElements("MakePage");
+                currentPage = "MakePage";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(teams[currentTeam][i + 1].name);
+            }
+            if (currentPage == "Assist") {
+                showElements("ParentAction");
+                currentPage = "ParentAction";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(teams[currentTeam][i + 1].name);
+                console.log(ActionStorage)
+                GameStorage.push(ActionStorage);
+            }
+            if (currentPage == "ShootingFoul") {
+                showElements("FreeThrow");
+                currentPage = "FreeThrow";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(teams[currentTeam][i + 1].name);
+            }
 
-function Turnover_click() {
-  document.getElementById("main-buttons").style.display = "none";
-  document.getElementById("team-buttons").style.display = "block";
-  if (team == 1) {
-    game.team1.turnovers += 1;
-  }
-  else if (team == 2) {
-    game.team2.turnovers += 1;
-  };
-  console.log(game);
-  //Table_update();
-}
+            if (currentPage == "Rebound") {
+                showElements("ParentAction");
+                currentPage = "ParentAction";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(teams[currentTeam][i + 1].name);
+                console.log(ActionStorage)
+                GameStorage.push(ActionStorage);
+            }
+            if (currentPage == "Block") {
+                showElements("ParentAction");
+                currentPage = "ParentAction";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(teams[currentTeam][i + 1].name);
+                console.log(ActionStorage)
+                GameStorage.push(ActionStorage);
+            }
 
-
-function onept_click() {
-  document.getElementById("point-buttons").style.display = "none";
-  document.getElementById("result-buttons").style.display = "block";
-  point = 1;
-}
-
-function twopt_click() {
-  document.getElementById("point-buttons").style.display = "none";
-  document.getElementById("result-buttons").style.display = "block";
-  point = 2;
-}
-
-function threept_click() {
-  document.getElementById("point-buttons").style.display = "none";
-  document.getElementById("result-buttons").style.display = "block";
-  point = 3;
-}
-
-function made_click() {
-  document.getElementById("result-buttons").style.display = "none";
-  document.getElementById("team-buttons").style.display = "block";
-  if (team == 1) {
-    if (point == 1) {
-      game.team1.shots.one.made += 1;
+            if (currentPage == "Turnover") {
+                showElements("StealCheck");
+                currentPage = "StealCheck";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(teams[currentTeam][i + 1].name);
+            }
+            if (currentPage == "Steal") {
+                showElements("ParentAction");
+                currentPage = "ParentAction";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(teams[currentTeam][i + 1].name);
+                console.log(ActionStorage)
+                GameStorage.push(ActionStorage);
+            }
+            if (currentPage == "Highlight") {
+                showElements("AddComment");
+                currentPage = "AddComment";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(teams[currentTeam][i + 1].name);
+                console.log(ActionStorage)
+                GameStorage.push(ActionStorage);
+            }
+        });
     }
-    if (point == 2) {
-      game.team1.shots.two.made += 1;
-    }
-    if (point == 3) {
-      game.team1.shots.three.made += 1;
-    }
-    console.log(game);
-    //Table_update();
-  }
-  else if (team == 2) {
-    if (point == 1) {
-      game.team2.shots.one.made += 1;
-    }
-    if (point == 2) {
-      game.team2.shots.two.made += 1;
-    }
-    if (point == 3) {
-      game.team2.shots.three.made += 1;
-    }
-  };
-  console.log(game);
-  //Table_update();
-}
-
-function missed_click() {
-  document.getElementById("result-buttons").style.display = "none";
-  document.getElementById("team-buttons").style.display = "block";
-  if (team == 1) {
-    if (point == 1) {
-      game.team1.shots.one.missed += 1;
-    }
-    if (point == 2) {
-      game.team1.shots.two.missed += 1;
-    }
-    if (point == 3) {
-      game.team1.shots.three.missed += 1;
-    }
-    console.log(game);
-    //Table_update();
-  }
-  else if (team == 2) {
-    if (point == 1) {
-      game.team2.shots.one.missed += 1;
-    }
-    if (point == 2) {
-      game.team2.shots.two.missed += 1;
-    }
-    if (point == 3) {
-      game.team2.shots.three.missed += 1;
-    }
-  };
-  console.log(game);
-  //Table_update();
-}
-
-function Highlight_click() {
-  const para = document.createElement("li");
-  const node = document.createTextNode(document.getElementById('myVideo').currentTime);
-  para.appendChild(node);
-  const body = document.getElementById("list");
-  linebreak = document.createElement("br");
-  //body.appendChild(linebreak);
-  //body.appendChild(linebreak);
-  body.appendChild(para)
-  //alert(document.getElementById('myVideo').currentTime);
-}
-
-function Table_update() {
-  document.getElementById("game-table").style.display = "block";
-  document.getElementById("team1fouls").innerHTML = game.team1.fouls;
-  document.getElementById("team2fouls").innerHTML = game.team2.fouls;
-  document.getElementById("team1turnovers").innerHTML = game.team1.turnovers;
-  document.getElementById("team2turnovers").innerHTML = game.team2.turnovers;
-  document.getElementById("team1freethrowmakes").innerHTML = game.team1.shots.one.made;
-  document.getElementById("team2freethrowmakes").innerHTML = game.team2.shots.one.made;
-  document.getElementById("team1freethrowmisses").innerHTML = game.team1.shots.one.missed;
-  document.getElementById("team2freethrowmisses").innerHTML = game.team2.shots.one.missed;
-  document.getElementById("team12pointmakes").innerHTML = game.team1.shots.two.made;
-  document.getElementById("team22pointmakes").innerHTML = game.team2.shots.two.made;
-  document.getElementById("team12pointmisses").innerHTML = game.team1.shots.two.missed;
-  document.getElementById("team22pointmisses").innerHTML = game.team2.shots.two.missed;
-  document.getElementById("team13pointmakes").innerHTML = game.team1.shots.three.made;
-  document.getElementById("team23pointmakes").innerHTML = game.team2.shots.three.made;
-  document.getElementById("team13pointmisses").innerHTML = game.team1.shots.three.missed;
-  document.getElementById("team23pointmisses").innerHTML = game.team2.shots.three.missed;
-}

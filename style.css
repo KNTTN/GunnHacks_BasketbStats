@@ -1,52 +1,114 @@
-html {
-  height: 100%;
-  width: 100%;
-  float: left;
-}
-
-#myVideo {
-  width: calc(100% - 200px);
-  height: auto;
-  float: left;
-}
-
-#team-buttons {
-  float: right;
-}
-
-#main-buttons {
-  float: right;
-  display: none;
-}
-
-#point-buttons {
-  float:right;
-  display: none;
-}
-
-#result-buttons {
-  float:right;
-  display: none;
+body {
+    background-color: #d5e5f1;
 }
 
 button {
-  width: 200px;
-  height: 50px;
+    font-size: large;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #9ac6c6;
+    color: rgb(35, 63, 66);
+    border: none;
+    cursor: pointer;
+    width: 300px;
+    transition: background-color 0.3s ease;
 }
 
-table {
-  display: block;
+button:hover {
+    background-color: #8ab1b1;
 }
 
-td {
-  padding: 10px;
-  border: 1px solid black;
+button:active {
+    background-color: #71bcbc;
 }
 
-h1 {
-  float: left;
+#myVideo {
+    width: calc(100% - 360px);
+    height: auto;
+    float: left;
+    border-radius: 20px;
+    border: 8px solid #008080;
 }
 
-ul {
-  padding: 50px;
+.menu {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ParentAction {
+    display: none;
+    flex-direction: column;
+    align-items: center; /* Center the buttons horizontally */
+    justify-content: center; /* Place the buttons at the bottom */
+}
+
+.Substitute {
+    display: flex;
+    position: fixed; /* Fix the position at the bottom of the screen */
+    bottom: 0; /* Position at the bottom */
+    right: 30px;
+    height: 100px;
+    button {
+        font-size: large;
+        background-color: rgb(170, 215, 103);
+        color: rgb(14, 44, 12);
+    }
+}
+
+.ShotType {
+    display: none;
+    flex-direction: column;
+    align-items: center; /* Center the buttons horizontally */
+    justify-content: center; /* Center the buttons vertically */
+}
+
+.Turnover {
+    display: none;
+    flex-direction: column;
+    align-items: center; /* Center the buttons horizontally */
+    justify-content: center; /* Center the buttons vertically */
+}
+
+.PlayerSelect {
+    display: none;
+    flex-direction: column;
+    align-items: center; /* Center the buttons horizontally */
+    justify-content: center; /* Center the buttons vertically */
+}
+
+.MakePage {
+    display: none;
+    flex-direction: column;
+    align-items: center; /* Center the buttons horizontally */
+    justify-content: center; /* Center the buttons vertically */
+}
+
+.MadeShot {
+    display: none;
+    flex-direction: column;
+    align-items: center; /* Center the buttons horizontally */
+    justify-content: center; /* Center the buttons vertically */
+}
+
+.MissedShot {
+    display: none;
+    flex-direction: column;
+    align-items: center; /* Center the buttons horizontally */
+    justify-content: center; /* Center the buttons vertically */
+}
+
+.FreeThrow {
+    display: none;
+    flex-direction: column;
+    align-items: center; /* Center the buttons horizontally */
+    justify-content: center; /* Center the buttons vertically */
+}
+
+.StealCheck {
+    display: none;
+    flex-direction: column;
+    align-items: center; /* Center the buttons horizontally */
+    justify-content: center; /* Center the buttons vertically */
 }
