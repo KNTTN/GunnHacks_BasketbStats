@@ -333,10 +333,3 @@ let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2", "Other"]
             }
         });
     }
-
-
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'b') {
-        console.log(GameStorage)
-    }
-});
