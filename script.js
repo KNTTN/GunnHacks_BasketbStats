@@ -66,7 +66,7 @@ function PlayerSelect() {
 
     document.getElementById("Team 1").textContent = String(teams[0][0].name + " team")
     document.getElementById("Team 2").textContent = String(teams[1][0].name + " team")
-    document.getElementById("Other team").textContent = String(teams[(currentTeam + 1) % 2][0].name + "'s Players")
+    document.getElementById("Other").textContent = String(teams[(currentTeam + 1) % 2][0].name + "'s Players")
     for (let i = 0; i < 5; i++) {
         const button = document.getElementById(playerButtons[i]);
         button.textContent = playerNames[i];
@@ -106,11 +106,12 @@ document.getElementById('3pts').addEventListener('click', function() {
     PlayerSelect();
 });
 
-document.getElementById('Other team').addEventListener('click', function() {
-    currentTeam = (currentTeam + 1) % 2;
-    showElements("PlayerSelect");
-    PlayerSelect();
-});
+//document.getElementById('Other team').addEventListener('click', function() {
+    //currentTeam = (currentTeam + 1) % 2;
+    //showElements("PlayerSelect");
+    //PlayerSelect();
+
+//});
 
 document.getElementById('Made').addEventListener('click', function() {
     showElements("MadeShot");
@@ -182,6 +183,14 @@ document.getElementById("Foul").addEventListener('click', function() {
     PlayerSelect();
 });
 
+document.getElementById("Substitute").addEventListener('click', function() {
+    Subs = prompt("Substitute ___ in for ___. (Separate Answer with Comma)");
+    SubIn = Subs.split(", ")[0];
+    SubOut = Subs.split(", ")[1];
+    team1.forEach((v) => (v.name === SubOut && (v.name = SubIn)));
+    GameStorage.push(["Substitute", SubIn, SubOut]);
+});
+
 var continueButtons = document.getElementsByClassName("Continue");
 for (var i = 0; i < continueButtons.length; i++) {
     continueButtons[i].addEventListener('click', function() {
@@ -224,20 +233,25 @@ document.getElementById("FTMissed").addEventListener('click', function() {
     }
 });
 
-let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2"]
-    for (let i = 0; i < 7; i++) {
+let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2", "Other"]
+    for (let i = 0; i < 8; i++) {
+        if (i < 5) {
+var names = teams[currentTeam][i + 1].name
+        } else {
+            var names = [team1[0].name, team2[0].name, String(team2[0].name + "'s Players")][i-5]
+        }
         document.getElementById(players[i]).addEventListener('click', function() {
             if (currentPage == "WhoShot") {
                 showElements("MakePage");
                 currentPage = "MakePage";
                 ActionStorage.push(videoElement.currentTime)
-                ActionStorage.push(teams[currentTeam][i + 1].name);
+                ActionStorage.push(names);
             }
             if (currentPage == "Assist") {
                 showElements("ParentAction");
                 currentPage = "ParentAction";
                 ActionStorage.push(videoElement.currentTime)
-                ActionStorage.push(teams[currentTeam][i + 1].name);
+                ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
             }
@@ -245,14 +259,14 @@ let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2"]
                 showElements("FreeThrow");
                 currentPage = "FreeThrow";
                 ActionStorage.push(videoElement.currentTime)
-                ActionStorage.push(teams[currentTeam][i + 1].name);
+                ActionStorage.push(names);
             }
 
             if (currentPage == "Rebound") {
                 showElements("ParentAction");
                 currentPage = "ParentAction";
                 ActionStorage.push(videoElement.currentTime)
-                ActionStorage.push(teams[currentTeam][i + 1].name);
+                ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
             }
@@ -260,7 +274,7 @@ let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2"]
                 showElements("ParentAction");
                 currentPage = "ParentAction";
                 ActionStorage.push(videoElement.currentTime)
-                ActionStorage.push(teams[currentTeam][i + 1].name);
+                ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
             }
@@ -275,7 +289,7 @@ let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2"]
                 showElements("ParentAction");
                 currentPage = "ParentAction";
                 ActionStorage.push(videoElement.currentTime)
-                ActionStorage.push(teams[currentTeam][i + 1].name);
+                ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
             }
@@ -283,7 +297,7 @@ let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2"]
                 showElements("AddComment");
                 currentPage = "AddComment";
                 ActionStorage.push(videoElement.currentTime)
-                ActionStorage.push(teams[currentTeam][i + 1].name);
+                ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
             }
@@ -291,7 +305,15 @@ let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2"]
                 showElements("ParentAction");
                 currentPage = "ParentAction";
                 ActionStorage.push(videoElement.currentTime)
-                ActionStorage.push(teams[currentTeam][i + 1].name);
+                ActionStorage.push(names);
+                console.log(ActionStorage)
+                GameStorage.push(ActionStorage);
+            }
+            if (currentPage == "Substitute") {
+                showElements("ParentAction");
+                currentPage = "ParentAction";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(names);
                 console.log(ActionStorage)
                 GameStorage.push(ActionStorage);
             }
