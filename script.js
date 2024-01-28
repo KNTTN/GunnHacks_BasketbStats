@@ -169,6 +169,13 @@ document.getElementById("AddComment").addEventListener('click', function() {
     ActionStorage.push("Comment: " + document.getElementById("Comment").value);
 });
 
+document.getElementById("Foul").addEventListener('click', function() {
+    showElements("PlayerSelect");
+    currentPage = "FoulPlayer";
+    ActionStorage.push("Foul");
+    PlayerSelect();
+});
+
 var continueButtons = document.getElementsByClassName("Continue");
 for (var i = 0; i < continueButtons.length; i++) {
     continueButtons[i].addEventListener('click', function() {
@@ -269,6 +276,14 @@ let players = ["p1", "p2", "p3", "p4", "p5", "Team 1", "Team 2"]
             if (currentPage == "Highlight") {
                 showElements("AddComment");
                 currentPage = "AddComment";
+                ActionStorage.push(videoElement.currentTime)
+                ActionStorage.push(teams[currentTeam][i + 1].name);
+                console.log(ActionStorage)
+                GameStorage.push(ActionStorage);
+            }
+            if (currentPage == "FoulPlayer") {
+                showElements("ParentAction");
+                currentPage = "ParentAction";
                 ActionStorage.push(videoElement.currentTime)
                 ActionStorage.push(teams[currentTeam][i + 1].name);
                 console.log(ActionStorage)
